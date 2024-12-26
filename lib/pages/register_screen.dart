@@ -42,37 +42,25 @@ class RegisterScreen extends StatelessWidget {
   }
 
   void _signUp(BuildContext context) async {
-    if (nameController.text == "" ||
-        phoneController.text == "" ||
-        IdController.text == "" ||
-        passwordController.text == "" ||
-        password2Controller.text == "") {
+    if (nameController.text == "" || phoneController.text == "" || IdController.text == "" || passwordController.text == "" || password2Controller.text == "") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('빈칸을 입력해주세요.')),
       );
     } else if (passwordController.text != password2Controller.text) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content:
-                Text('비밀번호가 서로 다릅니다.\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
+        SnackBar(content: Text('비밀번호가 서로 다릅니다.\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
       );
     } else if (passwordController.text.length < 8) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                '비밀번호는 8자 이상이어야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
+        SnackBar(content: Text('비밀번호는 8자 이상이어야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
       );
     } else if (!containsAlphabet(passwordController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                '비밀번호는 영문자를 포함해야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
+        SnackBar(content: Text('비밀번호는 영문자를 포함해야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
       );
     } else if (!containsNumber(passwordController.text)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(
-                '비밀번호는 숫자를 포함해야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
+        SnackBar(content: Text('비밀번호는 숫자를 포함해야 합니다.\n\n비밀번호는 8자 이상이어야 하고,\n영문자, 숫자가 필수입니다.')),
       );
     } else {
       try {
@@ -211,8 +199,7 @@ class RegisterScreen extends StatelessWidget {
                               vertical: 0,
                             ),
                             shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.circular(10.0), // 모서리 둥글게 설정
+                              borderRadius: BorderRadius.circular(10.0), // 모서리 둥글게 설정
                             ),
                           ),
                           onPressed: () => _signUp(context),

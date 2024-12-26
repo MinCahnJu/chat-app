@@ -23,9 +23,7 @@ class FriendProvider with ChangeNotifier {
         .order('created_at')
         .execute()
         .map((data) {
-          final filteredData = data
-              .where((e) => e['user_name'] != "" || e['friend_name'] != "")
-              .toList();
+          final filteredData = data.where((e) => e['user_name'] != "" || e['friend_name'] != "").toList();
           final friends = filteredData.map((e) => Friends.fromMap(e)).toList();
           _friends.clear();
           _friends.addAll(friends);
@@ -50,39 +48,19 @@ class FriendProvider with ChangeNotifier {
     int count = 1;
     final response;
 
-    final friendInfo = await supabaseClient
-        .from('users')
-        .select()
-        .eq('user_id', friendid)
-        .single()
-        .execute();
+    final friendInfo = await supabaseClient.from('users').select().eq('user_id', friendid).single().execute();
 
     if (friendInfo.data == [] || friendInfo.data == null) {
       response = await supabaseClient.from('friends').insert([
-        {
-          'user_id': userid,
-          'user_name': name,
-          'friend_id': friendid,
-          'friend_name': "",
-          'lastcontent': "no message",
-          'created_at': formattedTime
-        }
+        {'user_id': userid, 'user_name': name, 'friend_id': friendid, 'friend_name': "", 'lastcontent': "no message", 'created_at': formattedTime}
       ]).execute();
     } else {
       response = await supabaseClient.from('friends').insert([
-        {
-          'user_id': userid,
-          'user_name': name,
-          'friend_id': friendid,
-          'friend_name': friendInfo.data['name'],
-          'lastcontent': "no message",
-          'created_at': formattedTime
-        }
+        {'user_id': userid, 'user_name': name, 'friend_id': friendid, 'friend_name': friendInfo.data['name'], 'lastcontent': "no message", 'created_at': formattedTime}
       ]).execute();
     }
 
-    if ((friendid == "" || friendInfo.data == [] || friendInfo.data == null) &&
-        userid != "djkasbgkljsabgdjklbasjkgbdsajkbgsakdjbg") {
+    if ((friendid == "" || friendInfo.data == [] || friendInfo.data == null) && userid != "djkasbgkljsabgdjklbasjkgbdsajkbgsakdjbg") {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('등록되지 않은 아이디 입니다.')),
       );
@@ -92,17 +70,9 @@ class FriendProvider with ChangeNotifier {
     if (response.error != null) {
       print('Error adding friend: ${response.error!.message}');
     } else {
-      print('friend add success!');
-      if (userid == "djkasbgkljsabgdjklbasjkgbdsajkbgsakdjbg" ||
-          friendInfo.data == [] ||
-          friendInfo.data == null ||
-          friendid == "" ||
-          count == 0) {
-        final response2 = await supabaseClient
-            .from('friends')
-            .delete()
-            .eq('created_at', formattedTime)
-            .execute();
+      print('friend add success!' + friendid);
+      if (userid == "djkasbgkljsabgdjklbasjkgbdsajkbgsakdjbg" || friendInfo.data == [] || friendInfo.data == null || friendid == "" || count == 0) {
+        final response2 = await supabaseClient.from('friends').delete().eq('created_at', formattedTime).execute();
         if (response2.error != null) {
           print('Error deleting Friend: ${response2.error!.message}');
         } else {
